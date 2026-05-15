@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 
-const WHATSAPP_NUMBER = "5511999999999";
+const WHATSAPP_NUMBER = "5511953840934";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 const TAXA_LIMPEZA = 150;
 const API_URL = "/api"; // Proxy seguro via Netlify Function — URL real fica no servidor
