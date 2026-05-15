@@ -557,7 +557,7 @@ export default function App() {
           <hr className="footer-divider"/>
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Chácara dos Sonhos. Todos os direitos reservados.</span>
-            <span>Desenvolvido com 💚</span>
+            <span>Desenvolvido por Johara Tech 💚</span>
           </div>
         </div>
       </footer>
