@@ -541,7 +541,7 @@ export default function App() {
                 <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Embu das Artes, SP</li>
                 <li>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                  <a href="https://instagram.com/chacaradossonhosembu" target="_blank" rel="noreferrer" style={{color:"rgba(255,255,255,0.75)",textDecoration:"none"}}>@chacara_dos_sonhos</a>
+                  <a href="https://instagram.com/chacaradossonhosembu" target="_blank" rel="noreferrer" style={{color:"rgba(255,255,255,0.75)",textDecoration:"none"}}>@chacaradossonhosembu</a>
                 </li>
               </ul>
             </div>
