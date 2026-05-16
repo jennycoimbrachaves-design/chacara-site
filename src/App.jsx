@@ -603,7 +603,7 @@ export default function App() {
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Funcionamento</h4>
+              <h4>Horário de Atendimento WhatsApp</h4>
               <ul>
                 <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Seg–Sex: 08h às 18h</li>
                 <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Sáb–Dom: 08h às 20h</li>
