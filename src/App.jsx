@@ -339,7 +339,7 @@ export default function App() {
           <span className="hero-tag">Piscina</span>
           <span className="hero-tag">Churrasqueira</span>
           <span className="hero-tag">Day use</span>
-          <span className="hero-tag">Sem som automotivo</span>
+          <span className="hero-tag">Proibido som automotivo</span>
         </div>
       </div>
 
