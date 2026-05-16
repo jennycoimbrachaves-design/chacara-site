@@ -373,7 +373,7 @@ export default function App() {
       {/* MAIN */}
       <main className="main-content">
         <div style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:"0.75rem",fontSize:12,color:"#555"}}>
-          {[["#639922","Disponível"],["#E24B4A","Reservado"],["#823122","Selecionado"],["#e65100","Feriado"],["#880e4f","Consultar"],["#e0e0e0","Indisponível"]].map(([c,l])=>(
+          {[["#639922","Disponível"],["#e0e0e0","Reservado"],["#823122","Selecionado"],["#e65100","Feriado"],["#880e4f","Consultar"],["#e0e0e0","Indisponível"]].map(([c,l])=>(
             <div key={l} style={{display:"flex",alignItems:"center",gap:5}}>
               <div style={{width:10,height:10,borderRadius:"50%",background:c}}/>{l}
             </div>
