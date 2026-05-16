@@ -338,9 +338,7 @@ export default function App() {
         .wa-float{display:flex;position:fixed;top:16px;right:16px;z-index:999;background:#25D366;border-radius:50px;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);text-decoration:none;transition:all .2s;padding:13px 20px;gap:10px}
         .wa-float:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(37,211,102,.6)}
         .wa-float-label{color:white;font-size:15px;font-weight:700;font-family:inherit;white-space:nowrap}
-        .wa-float-pulse{position:absolute;inset:0;border-radius:50px;background:#25D366;opacity:.35;animation:pulse 2s infinite}
-        @keyframes pulse{0%{transform:scale(1);opacity:.35}70%{transform:scale(1.08);opacity:0}100%{transform:scale(1.08);opacity:0}}
-        @media(max-width:600px){.footer-grid{grid-template-columns:1fr;gap:1.5rem}.header-info{display:none}.header-wa-btn{display:none}.logo-img{width:140px}.wa-float{padding:13px;border-radius:50%;width:52px;height:52px}.wa-float-label{display:none}.wa-float-pulse{border-radius:50%;inset:auto;width:52px;height:52px}}
+        @media(max-width:600px){.footer-grid{grid-template-columns:1fr;gap:1.5rem}.header-info{display:none}.header-wa-btn{display:none}.logo-img{width:140px}.wa-float{padding:13px;border-radius:50%;width:52px;height:52px}.wa-float-label{display:none}}
       `}</style>
 
       {/* HEADER */}
@@ -579,10 +577,11 @@ export default function App() {
 
       {/* BOTÃO FLUTUANTE WHATSAPP — mobile */}
       <a className="wa-float" href={WHATSAPP_LINK} target="_blank" rel="noreferrer" aria-label="Fale conosco pelo WhatsApp">
-        <div className="wa-float-pulse"/>
         {/* Ícone oficial WhatsApp */}
-        <svg width="28" height="28" viewBox="0 0 175.216 175.552" fill="white" xmlns="http://www.w3.org/2000/svg">
-          <path d="M87.6 0C39.3 0 0 39.3 0 87.6c0 15.3 4 29.7 11 42.1L0 175.6l47.1-10.8c12 6.4 25.6 10 40.2 10h.3c48.3 0 87.6-39.3 87.6-87.6S135.9 0 87.6 0zm0 160.4c-13.2 0-25.7-3.6-36.5-9.8l-2.6-1.6-27.2 6.2 6.4-26.4-1.7-2.7C19.5 115 15.6 101.7 15.6 87.6c0-39.8 32.4-72.1 72.1-72.1 19.3 0 37.3 7.5 50.9 21.2 13.6 13.6 21.1 31.7 21.1 51-.1 39.8-32.4 72.2-72.1 72.2zm39.6-54.1c-2.2-1.1-12.9-6.3-14.9-7-.9-.3-1.6-.5-2.3.6-2 2.8-5.3 6.7-5.8 7.2-.5.5-1.1.6-2.1.1-2.2-1.1-8.5-3.2-16.3-10.2-6-5.4-10.1-12.1-11.3-14.1-.5-1-.1-1.6.5-2.1 1.6-1.2 3.1-3.2 4.7-4.8.5-.8.8-1.4 1.2-2.3.5-.9.2-1.8-.1-2.5-.3-.7-3.3-7.9-4.5-10.9-1.2-2.8-2.4-2.4-3.3-2.5-.9 0-1.8-.1-2.8-.1-1.8 0-3.5.9-4.8 2.1-4.7 4.9-5.7 11.4-1 18.1 4.7 6.6 14.3 19.6 31.9 27.3 4.5 1.9 8 3.1 10.7 3.9 4.5 1.4 8.6 1.2 11.9.7 3.6-.5 11.2-4.6 12.8-9 1.6-4.5 1.6-8.3 1.1-9.1-.5-.7-1.5-1.1-3.5-2z"/>
+        {/* Logo oficial WhatsApp: bolha branca + telefone verde */}
+        <svg width="28" height="28" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path fill="white" d="M24 4C13 4 4 13 4 24c0 3.6.97 7 2.65 9.95L4 44l10.35-2.6A19.84 19.84 0 0 0 24 44c11 0 20-9 20-20S35 4 24 4z"/>
+          <path fill="#25D366" d="M35.2 29.6c-.5-.25-2.97-1.46-3.43-1.63-.46-.17-.8-.25-1.13.25s-1.3 1.63-1.59 1.96c-.3.33-.58.38-1.08.13-2.97-1.49-4.92-2.65-6.88-6.02-.52-.9.52-.83 1.48-2.77.17-.33.08-.63-.04-.88-.13-.25-1.13-2.72-1.55-3.72-.4-.97-.82-.84-1.13-.85-.29-.02-.63-.02-.96-.02-.33 0-.88.13-1.34.63-.46.5-1.75 1.71-1.75 4.17s1.79 4.84 2.04 5.17c.25.33 3.52 5.38 8.54 7.55 3.17 1.37 4.42 1.48 6.01.25 1-.77 1.6-2.01 1.84-3.14.13-.63.08-1.17-.13-1.28z"/>
         </svg>
         <span className="wa-float-label">Fale conosco</span>
       </a>
