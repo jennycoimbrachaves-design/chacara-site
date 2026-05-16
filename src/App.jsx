@@ -108,6 +108,7 @@ export default function App() {
   const [bookedDates, setBookedDates] = useState(new Set());
   const [precosCfg, setPrecosCfg]   = useState(null);
   const [periodoCfg, setPeriodoCfg] = useState(null);
+  const [todosPeriodos, setTodosPeriodos] = useState([]);
   const [loading,   setLoading]     = useState(true);
   const [loadError, setLoadError]   = useState(false);
 
@@ -117,7 +118,8 @@ export default function App() {
       .then(data => {
         setBookedDates(new Set(data.booked||[]));
         if (data.precos)  setPrecosCfg(data.precos);
-        if (data.periodo) setPeriodoCfg(data.periodo);
+        if (data.periodo)  setPeriodoCfg(data.periodo);
+        if (data.periodos) setTodosPeriodos(data.periodos);
         setLoading(false); setLoadError(false);
       })
       .catch(()=>{ setLoadError(true); setLoading(false); });
@@ -167,15 +169,31 @@ export default function App() {
   };
   const sexta_e_fds = isEspecial ? true : (periodoCfg?.sexta_e_fds || false);
 
+  // Encontra o período correto para uma data específica
+  const getPeriodoForDate = (ds) => {
+    if (!todosPeriodos.length) return periodoCfg; // fallback para período atual
+    const p = todosPeriodos.find(p =>
+      !p.blocked && ds >= p.inicio && ds <= p.fim
+    );
+    if (!p) return null;
+    // Normaliza campo tabela_dados → tabela (compatibilidade)
+    return { ...p, tabela: p.tabela_dados || p.tabela || [] };
+  };
+
   const getHorList = ds => {
     const dow = fromStr(ds).getDay();
     if (isEspecial) {
       const isSegQui = !FERIADOS_2026.has(ds) && dow >= 1 && dow <= 4;
       return isSegQui ? HOR_SEG_ESP : HOR_FDS_ESP;
     }
+    // Usa horários do período correto para essa data
+    const p = getPeriodoForDate(ds);
+    const horFds = (p?.horarios_fds?.length ? p.horarios_fds : HOR_FDS_FALLBACK);
+    const horSem = (p?.horario_semana || HOR_SEG_FALLBACK[0]);
+    const sextaFds = p?.sexta_e_fds || false;
     const td = getTipoDia(ds);
-    const isFdsDia = td === "fds" || td === "feriado" || (sexta_e_fds && dow === 5);
-    return isFdsDia ? getHorariosFds() : [getHorarioSem()];
+    const isFdsDia = td === "fds" || td === "feriado" || (sextaFds && dow === 5);
+    return isFdsDia ? horFds : [horSem];
   };
 
   const getHor = ds => {
@@ -186,26 +204,27 @@ export default function App() {
 
   const setHor = (ds,idx) => setHorMap(prev=>({...prev,[ds]:idx}));
 
-  const getTabela = () => {
+  // getTabela agora aceita uma data para buscar o período correto
+  const getTabelaForDate = (ds) => {
     if (isEspecial) {
-      // Para casamento/debutante: usa tabela_especial do período
+      const p = getPeriodoForDate(ds);
+      if (p?.tabela_especial?.length) return p.tabela_especial;
       if (periodoCfg?.tabela_especial?.length) return periodoCfg.tabela_especial;
-      if (precosCfg?.eventos_especiais?.[eventoAtual.tabela]?.length)
-        return precosCfg.eventos_especiais[eventoAtual.tabela];
       return TABELA_ESPECIAL;
     }
-    // Para eventos padrão: usa tabela do período
+    const p = getPeriodoForDate(ds);
+    if (p?.tabela?.length) return p.tabela;
     if (periodoCfg?.tabela?.length) return periodoCfg.tabela;
-    if (precosCfg?.tabela_padrao?.length) return precosCfg.tabela_padrao;
     return TABELA_PADRAO;
   };
+  const getTabela = () => getTabelaForDate(selDates[0] || todayStr);
 
   const calcDia = ds => {
     if (getTipoDiaCtx(ds) === "especial") return 0;
-    const horList = getHorList(ds);
+    const horList  = getHorList(ds);
     const isSemana = horList.length === 1;
-    const horIdx = isSemana ? 0 : (horMap[ds] ?? 0);
-    const tab = getTabela();
+    const horIdx   = isSemana ? 0 : (horMap[ds] ?? 0);
+    const tab      = getTabelaForDate(ds); // ← usa tabela do período da data
     return lookupPreco(tab, nPessoas, horIdx, isSemana);
   };
 
@@ -213,7 +232,9 @@ export default function App() {
   const precoBase   = !temEspecial ? selDates.reduce((s,d)=>s+calcDia(d),0) : null;
   const taxaLimp = isEspecial
     ? (precosCfg?.taxa_limpeza_especial ?? 300)
-    : (periodoCfg?.taxa_limpeza ?? precosCfg?.taxa_limpeza ?? TAXA_LIMPEZA);
+    : (getPeriodoForDate(selDates[0] || todayStr)?.taxa_limpeza
+       ?? periodoCfg?.taxa_limpeza
+       ?? TAXA_LIMPEZA);
   const totalGeral  = precoBase!==null ? precoBase+taxaLimp : null;
 
   const labelDias = selDates.length===0 ? ""
@@ -344,7 +365,7 @@ export default function App() {
           <span className="hero-tag">Piscina</span>
           <span className="hero-tag">Churrasqueira</span>
           <span className="hero-tag">Day use</span>
-          <span className="hero-tag">Proibido som automotivo</span>
+          <span className="hero-tag">Sem som automotivo</span>
         </div>
       </div>
 
@@ -582,7 +603,7 @@ export default function App() {
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Horário de Atendimento WhatsApp</h4>
+              <h4>Funcionamento</h4>
               <ul>
                 <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Seg–Sex: 08h às 18h</li>
                 <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Sáb–Dom: 08h às 20h</li>
@@ -593,7 +614,7 @@ export default function App() {
           <hr className="footer-divider"/>
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Chácara dos Sonhos. Todos os direitos reservados.</span>
-            <span>Desenvolvido com Johara Tech💚</span>
+            <span>Desenvolvido por Johara Tech 💚</span>
           </div>
         </div>
       </footer>
